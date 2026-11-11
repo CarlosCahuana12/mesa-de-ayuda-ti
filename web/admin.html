@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel y reportes - Mesa de Ayuda TI</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem("tema")||(matchMedia("(prefers-color-scheme: dark)").matches?"oscuro":"claro")}catch(e){}</script>
+</head>
+<body data-titulo="Panel y reportes">
+
+  <div class="app">
+    <aside class="menu" id="menu"></aside>
+
+    <div class="principal">
+      <header class="barra" id="barra"></header>
+
+      <main class="contenido">
+
+        <!-- 1. SITUACIÓN ACTUAL (siempre en tiempo real) -->
+        <h2 class="titulo-seccion">📍 Ahora mismo</h2>
+        <div class="kpis" id="kpisAhora"></div>
+
+        <!-- 2. BANDEJA SIN ASIGNAR -->
+        <div class="tarjeta" id="sin-asignar">
+          <div class="tarjeta-cabecera">
+            <h2>📥 Tickets sin asignar</h2>
+            <span class="tenue">Asígnalos tú o deja que un analista los tome desde su bandeja</span>
+          </div>
+          <div id="listaSinAsignar"></div>
+        </div>
+
+        <!-- 3. REPORTES POR PERIODO -->
+        <div class="tarjeta periodo">
+          <div class="tarjeta-cabecera">
+            <h2>📈 Reportes</h2>
+            <button class="btn btn-secundario" id="btnExportarReporte">📥 Exportar reporte a Excel</button>
+          </div>
+          <div class="filtros">
+            <select id="selPeriodo" aria-label="Periodo">
+              <option value="7">Últimos 7 días</option>
+              <option value="30" selected>Últimos 30 días</option>
+              <option value="mes">Este mes</option>
+              <option value="mes-anterior">Mes anterior</option>
+              <option value="todo">Todo el historial</option>
+              <option value="rango">Rango personalizado</option>
+            </select>
+            <input type="date" id="fechaDesde" aria-label="Desde" hidden>
+            <input type="date" id="fechaHasta" aria-label="Hasta" hidden>
+          </div>
+          <p class="tenue" id="textoPeriodo"></p>
+        </div>
+
+        <div class="kpis" id="kpisPeriodo"></div>
+
+        <div class="tarjeta">
+          <h2>👥 Rendimiento del equipo de TI</h2>
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>Analista</th>
+                  <th>Abiertos ahora</th>
+                  <th>Resueltos</th>
+                  <th>SLA respuesta</th>
+                  <th>SLA solución</th>
+                  <th>Tiempo prom. atención</th>
+                  <th>Satisfacción</th>
+                </tr>
+              </thead>
+              <tbody id="tablaRendimiento"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="graficos">
+          <div class="tarjeta">
+            <h2>Tickets por categoría</h2>
+            <div id="graficoCategorias"></div>
+          </div>
+          <div class="tarjeta">
+            <h2>Problemas más frecuentes</h2>
+            <div id="graficoSubcategorias"></div>
+          </div>
+          <div class="tarjeta">
+            <h2>Áreas que más reportan</h2>
+            <div id="graficoAreas"></div>
+          </div>
+          <div class="tarjeta">
+            <h2>Tickets por prioridad</h2>
+            <div id="graficoPrioridades"></div>
+          </div>
+        </div>
+
+        <div class="tarjeta" style="margin-top: 20px;">
+          <h2>💬 Últimos comentarios de la encuesta</h2>
+          <div id="comentarios"></div>
+        </div>
+
+        <!-- 4. TODOS LOS TICKETS -->
+        <div class="tarjeta" id="todos">
+          <div class="tarjeta-cabecera">
+            <h2>🗂️ Todos los tickets</h2>
+            <div>
+            <a class="btn btn-primario" href="nuevo-ticket.html">➕ Nuevo ticket</a>
+            <button class="btn btn-secundario" id="btnExportar">📥 Exportar lista a Excel</button>
+            </div>
+          </div>
+
+          <div class="filtros">
+            <input type="search" id="busqueda" placeholder="🔍 Código, asunto o solicitante...">
+            <select id="filtroEstado"><option value="">Todos los estados</option></select>
+            <select id="filtroCategoria"><option value="">Todas las categorías</option></select>
+            <select id="filtroPrioridad"><option value="">Todas las prioridades</option></select>
+            <select id="filtroTecnico"><option value="">Todos los técnicos</option></select>
+            <select id="filtroArea"><option value="">Todas las áreas</option></select>
+          </div>
+
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Asunto</th>
+                  <th>Solicitante</th>
+                  <th>Técnico</th>
+                  <th>Prioridad</th>
+                  <th>Estado</th>
+                  <th>SLA</th>
+                </tr>
+              </thead>
+              <tbody id="tablaTickets"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Librería para exportar a Excel -->
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script src="js/datos.js"></script>
+  <script src="js/app.js" data-pagina="js/admin.js"></script>
+</body>
+</html>

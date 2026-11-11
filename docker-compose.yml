@@ -1,0 +1,28 @@
+# =========================================================
+# Mesa de Ayuda TI - Mesa de ayuda en Docker (NAS o servidor)
+#
+#   docker compose up -d --build        Construir y encender
+#   docker compose logs -f              Ver lo que está pasando
+#   docker compose exec mesa-ayuda python gestionar.py cuentas-iniciales
+#
+# Los datos quedan en las carpetas ./datos y ./respaldos del NAS,
+# así que no se pierden aunque se actualice o reinicie el contenedor.
+# =========================================================
+services:
+  mesa-ayuda:
+    build: .
+    image: mesa-ayuda-ti:latest
+    container_name: mesa-ayuda
+    restart: unless-stopped          # se enciende solo al reiniciar el NAS
+    ports:
+      - "8080:8080"                  # puerto del NAS : puerto de la app
+    env_file:
+      - .env
+    environment:
+      - PUERTO=8080
+      - RUTA_BD=/app/datos/mesa_ayuda.db
+      - CARPETA_ADJUNTOS=/app/datos/adjuntos
+      - CARPETA_RESPALDOS=/app/respaldos
+    volumes:
+      - ./datos:/app/datos           # base de datos y adjuntos (disco local del NAS)
+      - ./respaldos:/app/respaldos   # copias de seguridad diarias

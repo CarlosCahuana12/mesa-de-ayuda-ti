@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión - Mesa de Ayuda TI</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem("tema")||(matchMedia("(prefers-color-scheme: dark)").matches?"oscuro":"claro")}catch(e){}</script>
+</head>
+<body>
+
+  <button class="btn-icono btn-tema tema-flotante" id="btnTemaFlotante" title="Cambiar tema claro / oscuro">🌙</button>
+
+  <div class="pagina-login">
+    <div class="caja-login">
+      <img class="logo-login-img" src="img/logo.png" alt="Logo">
+      <p class="subtitulo-marca">Mesa de ayuda</p>
+      <h1 id="nombreSistema">Mesa de Ayuda TI</h1>
+      <p>Reporta y haz seguimiento a tus incidencias</p>
+      <p class="nota nota-corporativa">🏢 Inicia sesión con tu <strong>cuenta corporativa</strong>
+        <span id="textoDominio">(@empresa.com)</span>.</p>
+
+      <p class="nota nota-error" id="mensajeError" hidden></p>
+
+      <a class="btn btn-microsoft" id="btnMicrosoft" href="/login/microsoft" hidden>
+        🔐 Iniciar sesión con mi cuenta corporativa (Microsoft 365)
+      </a>
+
+      <p class="separador-login" id="separador" hidden><span>o con tu contraseña</span></p>
+
+      <!-- Primera vez: crear la cuenta del Administrador -->
+      <form id="formInstalacion" class="form-login form-instalacion" hidden>
+        <div class="paso-instalacion">
+          <span class="insignia-admin">⭐ Primera vez</span>
+          <p>El sistema está recién instalado. <strong>Tu cuenta será la del Administrador</strong>
+            (Jefe de TI) con control total. Después podrás agregar a los analistas y usuarios.</p>
+        </div>
+        <div class="campo" id="bloqueCodigoInst" hidden>
+          <label for="instCodigo">Código de instalación *</label>
+          <input type="text" id="instCodigo" autocomplete="off">
+          <small class="ayuda">Está en el archivo .env del servidor (CODIGO_INSTALACION).</small>
+        </div>
+        <div class="campo">
+          <label for="instNombre">Nombre completo *</label>
+          <input type="text" id="instNombre" maxlength="80" autocomplete="name" placeholder="Ej: Laura Rojas" required>
+        </div>
+        <div class="campo">
+          <label for="instCorreo">Correo corporativo *</label>
+          <input type="email" id="instCorreo" autocomplete="username" placeholder="nombre@empresa.com" required>
+        </div>
+        <div class="campo">
+          <label for="instArea">Área *</label>
+          <input type="text" id="instArea" value="TI" maxlength="60" required>
+        </div>
+        <div class="campo">
+          <label for="instClave">Contraseña *</label>
+          <input type="password" id="instClave" minlength="8" autocomplete="new-password" placeholder="Mínimo 8 caracteres" required>
+        </div>
+        <div class="campo">
+          <label for="instClave2">Repite la contraseña *</label>
+          <input type="password" id="instClave2" minlength="8" autocomplete="new-password" required>
+        </div>
+        <button type="submit" class="btn btn-primario btn-bloque" id="btnInstalar">⭐ Crear cuenta de Administrador y entrar</button>
+      </form>
+
+      <form id="formLogin" class="form-login" hidden>
+        <div class="campo">
+          <label for="correo">Correo corporativo</label>
+          <input type="email" id="correo" autocomplete="username" placeholder="nombre@empresa.com" required>
+        </div>
+        <div class="campo">
+          <label for="clave">Contraseña</label>
+          <input type="password" id="clave" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-primario btn-bloque" id="btnEntrar">Entrar</button>
+        <p class="ayuda">¿Es tu primer ingreso? Usa la contraseña temporal que te dio TI; luego elegirás la tuya.<br>
+          ¿Olvidaste tu contraseña? Pídele una nueva a TI.</p>
+      </form>
+
+      <p class="pie-login">© 2026 Área de Tecnología de la Información</p>
+    </div>
+  </div>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

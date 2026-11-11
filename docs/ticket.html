@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del ticket - Mesa de Ayuda TI</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem("tema")||(matchMedia("(prefers-color-scheme: dark)").matches?"oscuro":"claro")}catch(e){}</script>
+</head>
+<body data-titulo="Detalle del ticket">
+
+  <div class="app">
+    <aside class="menu" id="menu"></aside>
+
+    <div class="principal">
+      <header class="barra" id="barra"></header>
+
+      <main class="contenido">
+
+        <!-- Si no existe o no tiene permiso -->
+        <div class="tarjeta vacio" id="sinAcceso" hidden>
+          <div style="font-size: 48px;">🔒</div>
+          <h2>Ticket no disponible</h2>
+          <p>El ticket no existe o no tienes permiso para verlo.</p>
+          <a class="btn btn-primario" id="btnVolverInicio" href="#">Volver</a>
+        </div>
+
+        <div id="vistaTicket" hidden>
+          <!-- Cabecera con código, asunto y progreso -->
+          <div class="tarjeta" id="cabecera"></div>
+
+          <div class="detalle">
+            <!-- CHAT DEL TICKET -->
+            <div class="tarjeta chat">
+              <h2 class="chat-titulo">💬 Conversación</h2>
+              <div class="mensajes" id="mensajes"></div>
+
+              <form class="form-mensaje" id="formMensaje">
+                <textarea id="textoMensaje" placeholder="Escribe un mensaje... (Enter para enviar, Shift + Enter para nueva línea)" required></textarea>
+                <div class="form-mensaje-pie">
+                  <label class="casilla" id="opcionInterna" hidden>
+                    <input type="checkbox" id="chkInterno"> 🔒 Nota interna (el usuario no la ve)
+                  </label>
+                  <select id="respuestaRapida" class="select-chico" hidden aria-label="Respuesta rápida">
+                    <option value="">⚡ Respuesta rápida...</option>
+                  </select>
+                  <button type="submit" class="btn btn-primario">Enviar</button>
+                </div>
+              </form>
+              <div class="chat-cerrado" id="chatCerrado" hidden>
+                🔒 Este ticket está cerrado. Si el problema vuelve, crea un ticket nuevo.
+              </div>
+            </div>
+
+            <!-- PANEL LATERAL -->
+            <div>
+              <div class="tarjeta" id="acciones"></div>
+              <div class="tarjeta" id="accionesGestion" hidden></div>
+              <div class="tarjeta">
+                <h2>Información</h2>
+                <dl class="datos" id="info"></dl>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/ticket.js"></script>
+</body>
+</html>

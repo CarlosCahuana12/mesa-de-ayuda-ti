@@ -1,0 +1,34 @@
+# =========================================================
+# Mesa de Ayuda TI en QNAP (Container Station)
+# ---------------------------------------------------------
+# Copia todo este texto en:
+#   Container Station → Aplicaciones → Crear
+#
+# Requisitos:
+#   - La carpeta mesa-ayuda-ti subida a la carpeta compartida "Container"
+#     (debe quedar: Container/mesa-ayuda-ti/app.py).
+#   - Internet en el NAS la primera vez (descarga Python y las librerías).
+#
+# El sistema queda en:  http://IP-DEL-NAS:8090
+# (QNAP usa el puerto 8080 para su propia página de administración).
+# =========================================================
+services:
+  mesa-ayuda:
+    image: python:3.12-slim
+    container_name: mesa-ayuda
+    restart: unless-stopped              # se enciende solo cuando se reinicia el NAS
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir --disable-pip-version-check -q -r requirements.txt && python servidor.py"
+    ports:
+      - "8090:8080"                      # puerto del NAS : puerto del sistema
+    environment:
+      - TZ=America/Lima
+      - PYTHONUTF8=1
+      - PYTHONUNBUFFERED=1
+      - PUERTO=8080
+      - ZONA_HORARIA=America/Lima
+      - DOMINIOS_PERMITIDOS=empresa.com
+      - RESPALDO_HORA=19:00
+    volumes:
+      # Código, base de datos (datos/) y respaldos (respaldos/) viven en el disco del NAS
+      - /share/Container/mesa-ayuda-ti:/app

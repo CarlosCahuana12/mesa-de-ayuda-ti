@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi bandeja - Mesa de Ayuda TI</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem("tema")||(matchMedia("(prefers-color-scheme: dark)").matches?"oscuro":"claro")}catch(e){}</script>
+</head>
+<body data-titulo="Mi bandeja de trabajo">
+
+  <div class="app">
+    <aside class="menu" id="menu"></aside>
+
+    <div class="principal">
+      <header class="barra" id="barra"></header>
+
+      <main class="contenido">
+
+        <!-- 1. MI DÍA -->
+        <div class="kpis" id="kpis"></div>
+
+        <!-- 2. TICKET QUE ESTOY ATENDIENDO AHORA -->
+        <div id="atendiendo"></div>
+
+        <!-- 3. MIS TICKETS ASIGNADOS -->
+        <div class="tarjeta">
+          <div class="tarjeta-cabecera">
+            <h2>🛠️ Mis tickets</h2>
+            <a class="btn btn-primario" href="nuevo-ticket.html">➕ Nuevo ticket</a>
+          </div>
+
+          <div class="filtros">
+            <input type="search" id="busqueda" placeholder="🔍 Buscar por código, asunto o solicitante...">
+            <select id="filtroVista">
+              <option value="abiertos">Solo abiertos</option>
+              <option value="espera">En espera</option>
+              <option value="resueltos">Esperando confirmación</option>
+              <option value="todos">Todos</option>
+            </select>
+          </div>
+
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Asunto</th>
+                  <th>Solicitante</th>
+                  <th>Prioridad</th>
+                  <th>Estado</th>
+                  <th>SLA</th>
+                  <th>Tiempo de atención</th>
+                </tr>
+              </thead>
+              <tbody id="tablaTickets"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 4. TICKETS DISPONIBLES PARA TOMAR -->
+        <div class="tarjeta" id="disponibles">
+          <div class="tarjeta-cabecera">
+            <h2>📥 Tickets disponibles</h2>
+            <span class="tenue">Elige la prioridad y tómalo para empezar a atenderlo</span>
+          </div>
+          <div id="listaDisponibles"></div>
+        </div>
+
+        <!-- 5. AYUDA: ¿QUÉ ES EL SLA? -->
+        <details class="tarjeta ayuda-sla">
+          <summary>❓ ¿Qué es el SLA y cómo se mide?</summary>
+          <p>
+            <strong>SLA</strong> (Service Level Agreement, o "acuerdo de nivel de servicio") son los
+            <strong>tiempos máximos</strong> que TI se compromete a cumplir. Hay dos:
+          </p>
+          <ul>
+            <li><strong>Respuesta:</strong> desde que se crea el ticket hasta que un analista empieza a atenderlo.</li>
+            <li><strong>Solución:</strong> desde que se crea hasta que se marca como resuelto (sin contar el tiempo "En espera").</li>
+          </ul>
+          <p>Solo cuentan las <strong>horas laborales</strong> (<span id="horarioSLA"></span>, sin feriados).
+            De noche, fines de semana y feriados el reloj del SLA se detiene (⏸).</p>
+          <table class="tabla-sla" id="tablaSLA"></table>
+          <p>
+            <span class="etiqueta sla-ok">Verde</span> a tiempo ·
+            <span class="etiqueta sla-riesgo">Amarillo</span> queda menos del 25 % ·
+            <span class="etiqueta sla-vencido">Rojo</span> se pasó del tiempo
+          </p>
+          <p class="tenue">
+            El <strong>tiempo de atención</strong> es otra medida: cuánto trabajaste en el ticket
+            (solo mientras está "En proceso"). Se pausa en espera, al resolver o al transferir.
+          </p>
+        </details>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js" data-pagina="js/tecnico.js"></script>
+</body>
+</html>

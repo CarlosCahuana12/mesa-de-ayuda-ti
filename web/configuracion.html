@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuración - Mesa de Ayuda TI</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem("tema")||(matchMedia("(prefers-color-scheme: dark)").matches?"oscuro":"claro")}catch(e){}</script>
+</head>
+<body data-titulo="Configuración">
+
+  <div class="app">
+    <aside class="menu" id="menu"></aside>
+
+    <div class="principal">
+      <header class="barra" id="barra"></header>
+
+      <main class="contenido">
+
+        <!-- Pestañas -->
+        <div class="pestanas" role="tablist">
+          <button class="pestana activa" data-tab="usuarios">👥 Usuarios</button>
+          <button class="pestana" data-tab="categorias">🏷️ Categorías y áreas</button>
+          <button class="pestana" data-tab="horario">🕗 Horario y SLA</button>
+          <button class="pestana" data-tab="feriados">📅 Feriados</button>
+          <button class="pestana" data-tab="auditoria">🧾 Auditoría</button>
+        </div>
+
+        <!-- ========== USUARIOS ========== -->
+        <section class="panel-tab" id="tab-usuarios">
+          <div class="tarjeta">
+            <div class="tarjeta-cabecera">
+              <h2>Usuarios del sistema</h2>
+              <span class="tenue" id="resumenUsuarios"></span>
+            </div>
+            <p class="nota">
+              Al agregar a alguien, el sistema genera una <strong>contraseña temporal</strong> que deberá cambiar al entrar.
+              Cuando se active el inicio con Microsoft 365, las personas nuevas se registrarán solas como "Usuario"
+              y aquí solo ajustarás su <strong>rol</strong> y su <strong>área</strong>.
+              Para cargar a muchos de una vez, usa <code>python gestionar.py importar-usuarios</code> en el servidor.
+              <br><strong>Roles:</strong> <em>Usuario</em> crea y sigue sus tickets ·
+              <em>Analista de soporte</em> atiende tickets ·
+              <em>Administrador</em> tiene control total (puede haber varios; siempre debe quedar al menos uno).
+            </p>
+            <div class="filtros">
+              <input type="search" id="buscarUsuario" placeholder="🔍 Buscar por nombre o correo...">
+              <select id="filtroRol"><option value="">Todos los roles</option></select>
+            </div>
+            <div class="tabla-contenedor">
+              <table>
+                <thead><tr><th>Nombre</th><th>Correo</th><th>Área</th><th>Rol</th><th>Tickets</th><th>Activo</th><th>Acciones</th></tr></thead>
+                <tbody id="tablaUsuarios"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tarjeta">
+            <h2>➕ Agregar usuario</h2>
+            <form id="formUsuario" class="form-linea">
+              <input type="text" id="nuevoNombre" placeholder="Nombre completo" required>
+              <input type="email" id="nuevoCorreo" placeholder="nombre@empresa.com" required>
+              <select id="nuevoArea" aria-label="Área"></select>
+              <select id="nuevoRol" aria-label="Rol" required></select>
+              <button type="submit" class="btn btn-primario">Agregar</button>
+            </form>
+          </div>
+
+          <div class="tarjeta" id="tarjetaImportar">
+            <div class="tarjeta-cabecera">
+              <h2>📥 Importar lista de trabajadores</h2>
+            </div>
+            <ol class="pasos-importar">
+              <li>Descarga la <strong>plantilla de Excel</strong> o usa tu propia lista: necesita las columnas
+                <strong>Nombre</strong>, <strong>Correo</strong>, <strong>Área</strong> y <strong>Rol</strong>
+                (Usuario, Analista o Administrador; si lo dejas vacío, será Usuario).</li>
+              <li>Elige el archivo (<strong>.xlsx</strong>, <strong>.xls</strong> o <strong>.csv</strong>). Primero verás una revisión; todavía no se crea nada.</li>
+              <li>Pulsa <strong>Importar</strong> y descarga las <strong>contraseñas temporales</strong> para entregarlas.</li>
+            </ol>
+            <div class="acciones-importar">
+              <button type="button" class="btn btn-secundario" id="btnPlantilla">⬇️ Descargar plantilla de Excel</button>
+              <label class="btn btn-primario" for="archivoImportar">📂 Elegir archivo…</label>
+              <input type="file" id="archivoImportar" accept=".xlsx,.xls,.csv" hidden>
+            </div>
+            <div id="resultadoImportar"></div>
+          </div>
+        </section>
+
+        <!-- ========== CATEGORÍAS Y ÁREAS ========== -->
+        <section class="panel-tab" id="tab-categorias" hidden>
+          <div class="tarjeta">
+            <div class="tarjeta-cabecera">
+              <h2>Categorías y tipos de problema</h2>
+            </div>
+            <p class="tenue">Los cambios aparecen de inmediato en el formulario de nuevo ticket. Los tickets antiguos conservan su categoría.</p>
+            <div id="listaCategorias"></div>
+            <form id="formCategoria" class="form-linea">
+              <input type="text" id="nuevaCategoria" placeholder="Nueva categoría (ej: Telefonía)" required>
+              <button type="submit" class="btn btn-primario">➕ Agregar categoría</button>
+            </form>
+          </div>
+
+          <div class="tarjeta">
+            <h2>Áreas de la empresa</h2>
+            <div class="chips" id="listaAreas"></div>
+            <form id="formArea" class="form-linea">
+              <input type="text" id="nuevaArea" placeholder="Nueva área (ej: Marketing)" required>
+              <button type="submit" class="btn btn-primario">➕ Agregar área</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- ========== HORARIO Y SLA ========== -->
+        <section class="panel-tab" id="tab-horario" hidden>
+          <form id="formHorario">
+            <div class="tarjeta">
+              <h2>Horario de atención de TI</h2>
+              <p class="tenue">El SLA solo cuenta el tiempo dentro de este horario.</p>
+              <div class="campo">
+                <label>Días de atención</label>
+                <div class="dias" id="diasSemana"></div>
+              </div>
+              <div class="fila-campos">
+                <div class="campo">
+                  <label for="horaInicio">Hora de inicio</label>
+                  <input type="time" id="horaInicio" required>
+                </div>
+                <div class="campo">
+                  <label for="horaFin">Hora de fin</label>
+                  <input type="time" id="horaFin" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="tarjeta">
+              <h2>Tiempos de SLA</h2>
+              <p class="tenue">En <strong>horas laborales</strong>. Ejemplo: con horario de 08:00 a 17:30, un día laboral son 9,5 h.</p>
+              <div class="tabla-contenedor">
+                <table class="tabla-config">
+                  <thead><tr><th>Prioridad</th><th>Respuesta (horas)</th><th>Solución (horas)</th></tr></thead>
+                  <tbody id="tablaConfigSLA"></tbody>
+                </table>
+              </div>
+              <div class="campo" style="max-width: 320px; margin-top: 16px;">
+                <label for="autocierre">Cierre automático (horas)</label>
+                <input type="number" id="autocierre" min="1" max="720" required>
+                <p class="ayuda">Si el usuario no confirma la solución en este tiempo, el ticket se cierra solo.</p>
+              </div>
+              <button type="submit" class="btn btn-primario">💾 Guardar horario y SLA</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- ========== FERIADOS ========== -->
+        <section class="panel-tab" id="tab-feriados" hidden>
+          <div class="tarjeta">
+            <h2>Feriados</h2>
+            <p class="tenue">En estos días el SLA no avanza. Revisa cada año el calendario oficial y agrega los días no laborables que decrete el gobierno.</p>
+            <form id="formFeriado" class="form-linea">
+              <input type="date" id="fechaFeriado" required>
+              <input type="text" id="nombreFeriado" placeholder="Nombre (ej: Aniversario de la empresa)" required>
+              <button type="submit" class="btn btn-primario">➕ Agregar</button>
+            </form>
+            <div class="tabla-contenedor">
+              <table>
+                <thead><tr><th>Fecha</th><th>Día</th><th>Feriado</th><th></th></tr></thead>
+                <tbody id="tablaFeriados"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== AUDITORÍA ========== -->
+        <section class="panel-tab" id="tab-auditoria" hidden>
+          <div class="tarjeta">
+            <div class="tarjeta-cabecera">
+              <h2>Historial de actividad</h2>
+              <button class="btn btn-secundario" id="btnExportarAuditoria">📥 Exportar a Excel</button>
+            </div>
+            <p class="tenue">Todo lo que pasa en el sistema: quién hizo qué y cuándo. No se puede editar ni borrar.</p>
+            <div class="filtros">
+              <input type="search" id="buscarAuditoria" placeholder="🔍 Buscar por persona, ticket o acción...">
+            </div>
+            <div class="tabla-contenedor">
+              <table>
+                <thead><tr><th>Fecha</th><th>Ticket / módulo</th><th>Acción</th></tr></thead>
+                <tbody id="tablaAuditoria"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script src="js/datos.js"></script>
+  <script src="js/app.js" data-pagina="js/configuracion.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base de conocimiento - Mesa de Ayuda TI</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem("tema")||(matchMedia("(prefers-color-scheme: dark)").matches?"oscuro":"claro")}catch(e){}</script>
+</head>
+<body data-titulo="Base de conocimiento">
+
+  <div class="app">
+    <aside class="menu" id="menu"></aside>
+
+    <div class="principal">
+      <header class="barra" id="barra"></header>
+
+      <main class="contenido">
+
+        <div class="tarjeta">
+          <div class="tarjeta-cabecera">
+            <div>
+              <h2>📚 Guías y soluciones rápidas</h2>
+              <p class="tenue" style="margin: 0;">Antes de crear un ticket, revisa si tu problema tiene una solución aquí.</p>
+            </div>
+            <button class="btn btn-primario" id="btnNuevoArticulo" hidden>➕ Nuevo artículo</button>
+          </div>
+
+          <!-- Formulario para que TI escriba artículos -->
+          <form id="formArticulo" class="form-articulo" hidden>
+            <h3 id="tituloForm">Nuevo artículo</h3>
+            <div class="fila-campos">
+              <div class="campo">
+                <label for="artCategoria">Categoría *</label>
+                <select id="artCategoria" required></select>
+              </div>
+              <div class="campo">
+                <label for="artSubcategoria">Tipo de problema</label>
+                <select id="artSubcategoria"></select>
+              </div>
+            </div>
+            <div class="campo">
+              <label for="artTitulo">Título *</label>
+              <input type="text" id="artTitulo" maxlength="100" placeholder="Ej: Cómo configurar la firma en Outlook" required>
+            </div>
+            <div class="campo">
+              <label for="artContenido">Pasos o solución *</label>
+              <textarea id="artContenido" placeholder="1. Abre...&#10;2. Haz clic en...&#10;3. ..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primario">Guardar artículo</button>
+            <button type="button" class="btn btn-secundario" id="btnCancelarArticulo">Cancelar</button>
+          </form>
+
+          <div class="filtros">
+            <input type="search" id="busqueda" placeholder="🔍 ¿Qué problema tienes? Ej: contraseña, impresora, VPN...">
+          </div>
+          <div class="chips" id="chips"></div>
+        </div>
+
+        <div id="listaArticulos"></div>
+
+        <div class="tarjeta vacio" id="sinResultados" hidden>
+          <p>No encontramos una guía para eso.</p>
+          <a class="btn btn-primario" href="nuevo-ticket.html" id="btnCrearTicket">➕ Crear un ticket</a>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js" data-pagina="js/conocimiento.js"></script>
+</body>
+</html>

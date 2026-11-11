@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuevo ticket - Mesa de Ayuda TI</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem("tema")||(matchMedia("(prefers-color-scheme: dark)").matches?"oscuro":"claro")}catch(e){}</script>
+</head>
+<body data-titulo="Nuevo ticket">
+
+  <div class="app">
+    <aside class="menu" id="menu"></aside>
+
+    <div class="principal">
+      <header class="barra" id="barra"></header>
+
+      <main class="contenido">
+        <div class="tarjeta" style="max-width: 760px; margin: 0 auto;">
+
+          <!-- FORMULARIO -->
+          <form id="formulario">
+            <h2>📝 Reportar una incidencia</h2>
+
+            <div class="nota">
+              👤 <span id="datosSolicitante"></span><br>
+              <small>El equipo de TI revisará tu solicitud y le asignará la prioridad según el impacto.
+              Horario de atención: <span id="horarioAtencion"></span>.</small>
+            </div>
+
+            <!-- Solo para el equipo de TI: registrar tickets de llamadas o WhatsApp -->
+            <div class="bloque-ti" id="bloqueTI" hidden>
+              <strong>🛠️ Registro por TI</strong>
+              <p class="ayuda">¿Te llamaron o escribieron por WhatsApp? Registra el ticket a nombre de esa persona;
+                ella lo verá en "Mis tickets" y recibirá los avisos.</p>
+              <div class="fila-campos">
+                <div class="campo">
+                  <label for="solicitante">Solicitante *</label>
+                  <select id="solicitante"></select>
+                </div>
+                <div class="campo">
+                  <label for="prioridadTI">Prioridad</label>
+                  <select id="prioridadTI">
+                    <option value="">La defino después</option>
+                    <option>Alta</option><option>Media</option><option>Baja</option>
+                  </select>
+                </div>
+              </div>
+              <label class="casilla"><input type="checkbox" id="tomarTI"> Asignármelo y empezar a atenderlo ahora</label>
+            </div>
+
+            <div class="fila-campos">
+              <div class="campo">
+                <label for="categoria">Categoría *</label>
+                <select id="categoria" required></select>
+              </div>
+              <div class="campo">
+                <label for="subcategoria">Tipo de problema *</label>
+                <select id="subcategoria" required disabled>
+                  <option value="">Primero elige una categoría</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="campo">
+              <label for="asunto">Asunto *</label>
+              <input type="text" id="asunto" maxlength="80" placeholder="Ej: La impresora del 2do piso no imprime" required>
+            </div>
+
+            <!-- Artículos que podrían resolver el problema sin crear el ticket -->
+            <div id="sugerencias" hidden></div>
+
+            <div class="campo">
+              <label for="descripcion">Describe el problema *</label>
+              <textarea id="descripcion" placeholder="¿Qué pasó? ¿Desde cuándo? ¿Aparece algún mensaje de error?" required></textarea>
+              <p class="ayuda">Mientras más detalles nos des, más rápido podremos ayudarte.</p>
+            </div>
+
+            <div class="fila-campos">
+              <div class="campo">
+                <label for="ubicacion">Equipo o ubicación</label>
+                <input type="text" id="ubicacion" placeholder="Ej: Laptop CONT-03 / 2do piso">
+              </div>
+              <div class="campo">
+                <label for="adjunto">Captura o archivo</label>
+                <input type="file" id="adjunto" accept="image/*,.pdf">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primario btn-bloque">Enviar ticket</button>
+          </form>
+
+          <!-- CONFIRMACIÓN -->
+          <div id="confirmacion" hidden style="text-align: center;">
+            <div style="font-size: 56px;">✅</div>
+            <h2>¡Ticket enviado!</h2>
+            <p>Tu número de ticket es:</p>
+            <p class="codigo" id="codigoNuevo" style="font-size: 32px;"></p>
+            <p class="tenue">Te avisaremos aquí y por correo cuando haya novedades.</p>
+            <p class="nota" id="avisoHorario" hidden></p>
+            <a class="btn btn-primario" id="verTicket" href="#">Ver mi ticket</a>
+            <a class="btn btn-secundario" href="usuario.html">Ir a mis tickets</a>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/nuevo-ticket.js"></script>
+</body>
+</html>

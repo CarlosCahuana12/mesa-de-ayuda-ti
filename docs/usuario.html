@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis tickets - Mesa de Ayuda TI</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem("tema")||(matchMedia("(prefers-color-scheme: dark)").matches?"oscuro":"claro")}catch(e){}</script>
+</head>
+<body data-titulo="Mis tickets">
+
+  <div class="app">
+    <aside class="menu" id="menu"></aside>
+
+    <div class="principal">
+      <header class="barra" id="barra"></header>
+
+      <main class="contenido">
+        <!-- Resumen -->
+        <div class="kpis" id="kpis"></div>
+
+        <!-- Historial -->
+        <div class="tarjeta">
+          <div class="tarjeta-cabecera">
+            <h2>Historial de mis tickets</h2>
+            <div>
+              <button class="btn btn-secundario" id="btnExportar">📥 Exportar a Excel</button>
+              <a class="btn btn-primario" href="nuevo-ticket.html">➕ Nuevo ticket</a>
+            </div>
+          </div>
+
+          <div class="filtros">
+            <input type="search" id="busqueda" placeholder="🔍 Buscar por código o asunto...">
+            <select id="filtroEstado">
+              <option value="">Todos los estados</option>
+            </select>
+          </div>
+
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Asunto</th>
+                  <th>Categoría</th>
+                  <th>Estado</th>
+                  <th>Técnico</th>
+                  <th>Última actualización</th>
+                </tr>
+              </thead>
+              <tbody id="tablaTickets"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Librería para exportar a Excel -->
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/usuario.js"></script>
+</body>
+</html>

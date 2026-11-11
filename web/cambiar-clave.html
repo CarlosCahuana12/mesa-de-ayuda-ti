@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cambiar contraseña - Mesa de Ayuda TI</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem("tema")||(matchMedia("(prefers-color-scheme: dark)").matches?"oscuro":"claro")}catch(e){}</script>
+</head>
+<body>
+
+  <button class="btn-icono btn-tema tema-flotante" id="btnTemaFlotante" title="Cambiar tema claro / oscuro">🌙</button>
+
+  <div class="pagina-login">
+    <div class="caja-login">
+      <div class="logo-login">🔑</div>
+      <h1>Cambiar contraseña</h1>
+      <p id="textoIntro">Elige una contraseña nueva.</p>
+
+      <p class="nota nota-error" id="mensajeError" hidden></p>
+
+      <form id="formClave" class="form-login">
+        <div class="campo">
+          <label for="actual">Contraseña actual (o la temporal que te dio TI)</label>
+          <input type="password" id="actual" autocomplete="current-password" required>
+        </div>
+        <div class="campo">
+          <label for="nueva">Contraseña nueva</label>
+          <input type="password" id="nueva" autocomplete="new-password" minlength="10" required>
+          <p class="ayuda">Mínimo 10 caracteres, con letras y números.</p>
+        </div>
+        <div class="campo">
+          <label for="repetir">Repite la contraseña nueva</label>
+          <input type="password" id="repetir" autocomplete="new-password" required>
+        </div>
+        <button type="submit" class="btn btn-primario btn-bloque">Guardar contraseña</button>
+        <a class="btn btn-secundario btn-bloque" id="btnCancelar" href="#">Cancelar</a>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js" data-pagina="js/cambiar-clave.js"></script>
+</body>
+</html>

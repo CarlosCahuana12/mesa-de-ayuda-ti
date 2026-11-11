@@ -1,0 +1,19 @@
+# Servicio para servidores LINUX (Ubuntu, Debian, Rocky...).
+# Copia este archivo a /etc/systemd/system/mesa-ayuda.service y ajusta las rutas y el usuario.
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now mesa-ayuda
+#   sudo systemctl status mesa-ayuda
+[Unit]
+Description=Mesa de Ayuda TI - Mesa de ayuda
+After=network.target
+
+[Service]
+User=mesaayuda
+WorkingDirectory=/opt/mesa-ayuda-ti
+ExecStart=/opt/mesa-ayuda-ti/.venv/bin/python servidor.py
+Restart=always
+RestartSec=5
+Environment=PYTHONUTF8=1
+
+[Install]
+WantedBy=multi-user.target

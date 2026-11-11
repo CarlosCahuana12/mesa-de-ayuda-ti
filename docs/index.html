@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión - Mesa de Ayuda TI</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script>try{document.documentElement.dataset.tema=localStorage.getItem("tema")||(matchMedia("(prefers-color-scheme: dark)").matches?"oscuro":"claro")}catch(e){}</script>
+</head>
+<body>
+
+  <button class="btn-icono btn-tema tema-flotante" id="btnTemaFlotante" title="Cambiar tema claro / oscuro">🌙</button>
+
+  <div class="pagina-login">
+    <div class="caja-login">
+      <img class="logo-login-img" src="img/logo.png" alt="Logo">
+      <p class="subtitulo-marca">Mesa de ayuda</p>
+      <h1>Mesa de Ayuda TI</h1>
+      <p>Reporta y haz seguimiento a tus incidencias</p>
+      <p class="nota nota-corporativa">🏢 Inicia sesión con tu <strong>cuenta corporativa</strong> (@empresa.com).</p>
+
+      <button class="btn btn-microsoft" id="btnMicrosoft">
+        🔐 Iniciar sesión con mi cuenta corporativa
+      </button>
+
+      <!-- Selector de cuentas de prueba (solo en la maqueta) -->
+      <div class="cuentas" id="cuentas" hidden>
+        <div class="nota">
+          🧪 <strong>Maqueta de vista previa:</strong> elige una cuenta para ver el sistema desde cada rol.
+          Los tickets son de ejemplo.
+          En la versión final, aquí se abrirá el inicio de sesión de Microsoft 365.
+        </div>
+        <div id="listaCuentas"></div>
+      </div>
+
+      <p class="pie-login">© 2026 Área de Tecnología de la Información</p>
+    </div>
+  </div>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
